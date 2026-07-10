@@ -13,7 +13,6 @@ import CardSkeleton from "../../../components/CardSkeleton/CardSkeleton";
 import { useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import CustomHelmet from "../../../components/CustomHelmet/CustomHelmet";
-import Pace from "pace-js";
 
 const Shop = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
@@ -140,12 +139,6 @@ const Shop = () => {
   const handleLinkClicked = () => {
     document.getElementById("shop-page-drawer").click();
   };
-
-  useEffect(() => {
-    if (location.pathname.includes("shop")) {
-      Pace.restart();
-    }
-  }, [location]);
 
   return (
     <div
