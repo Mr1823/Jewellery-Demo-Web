@@ -16,6 +16,20 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Jewelz Store</title>
+    <script>
+      window.addEventListener('error', function(e) {
+        var loader = document.getElementById('app-loader');
+        if (loader) {
+          loader.innerHTML = '<p style="color:red; padding: 20px;">Script Error: ' + e.message + '<br>Line: ' + e.lineno + '</p>';
+        }
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        var loader = document.getElementById('app-loader');
+        if (loader) {
+          loader.innerHTML = '<p style="color:red; padding: 20px;">Promise Error: ' + (e.reason && e.reason.message ? e.reason.message : e.reason) + '</p>';
+        }
+      });
+    </script>
     <style>
       /* Inline loading spinner so users see something immediately on slow connections */
       #app-loader {
