@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "./useAuthContext";
+import safeStorage from "../utils/storage";
 
 const useAxiosSecure = () => {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ const useAxiosSecure = () => {
   // Add an interceptor to inject the authorization header
   axiosSecure.interceptors.request.use(
     (config) => {
-      // Get the access token from localStorage
-      const accessToken = localStorage.getItem("ub-jewellers-jwt-token");
+      // Get the access token from safeStorage (Safari private mode safe)
+      const accessToken = safeStorage.getItem("ub-jewellers-jwt-token");
 
       // If an access token exists, add it to the request headers
       if (accessToken) {

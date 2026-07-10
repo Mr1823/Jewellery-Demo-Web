@@ -12,11 +12,12 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
+import safeStorage from "../utils/storage";
 
 export const AuthContext = createContext(null);
 const auth = app ? getAuth(app) : null;
 
-// google provier
+// google provider
 const googleProvider = auth ? new GoogleAuthProvider() : null;
 
 const AuthProvider = ({ children }) => {
@@ -31,7 +32,7 @@ const AuthProvider = ({ children }) => {
         setTimeout(() => {
           const mockUser = { uid: "mock-uid", email, displayName: email.split("@")[0] };
           setUser(mockUser);
-          localStorage.setItem("ub-jewellers-jwt-token", "mock-token");
+          safeStorage.setItem("ub-jewellers-jwt-token", "mock-token");
           setIsAuthLoading(false);
           resolve({ user: mockUser });
         }, 500);
@@ -66,8 +67,8 @@ const AuthProvider = ({ children }) => {
         setTimeout(() => {
           const mockUser = { uid: "admin-uid", email: "admin@buildwithus", displayName: "Admin" };
           setUser(mockUser);
-          localStorage.setItem("admin-logged-in", "true");
-          
+          safeStorage.setItem("admin-logged-in", "true");
+
           // Fetch real JWT token from backend
           axios
             .post(`${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/jwt`, {
@@ -75,8 +76,11 @@ const AuthProvider = ({ children }) => {
             })
             .then((res) => {
               if (res.data.token) {
-                localStorage.setItem("ub-jewellers-jwt-token", res.data.token);
+                safeStorage.setItem("ub-jewellers-jwt-token", res.data.token);
               }
+            })
+            .catch(() => {})
+            .finally(() => {
               setIsAuthLoading(false);
               resolve({ user: mockUser });
             });
@@ -88,7 +92,7 @@ const AuthProvider = ({ children }) => {
         setTimeout(() => {
           const mockUser = { uid: "mock-uid", email, displayName: email.split("@")[0] };
           setUser(mockUser);
-          localStorage.setItem("ub-jewellers-jwt-token", "mock-token");
+          safeStorage.setItem("ub-jewellers-jwt-token", "mock-token");
           setIsAuthLoading(false);
           resolve({ user: mockUser });
         }, 500);
@@ -105,7 +109,7 @@ const AuthProvider = ({ children }) => {
         setTimeout(() => {
           const mockUser = { uid: "mock-uid", email: "demo@example.com", displayName: "Demo User" };
           setUser(mockUser);
-          localStorage.setItem("ub-jewellers-jwt-token", "mock-token");
+          safeStorage.setItem("ub-jewellers-jwt-token", "mock-token");
           setIsAuthLoading(false);
           resolve({ user: mockUser });
         }, 500);
@@ -116,10 +120,10 @@ const AuthProvider = ({ children }) => {
 
   // Sign Out
   const logOut = () => {
-    localStorage.removeItem("admin-logged-in");
+    safeStorage.removeItem("admin-logged-in");
     if (!auth) {
       return new Promise((resolve) => {
-        localStorage.removeItem("ub-jewellers-jwt-token");
+        safeStorage.removeItem("ub-jewellers-jwt-token");
         setUser(null);
         setIsAuthLoading(false);
         resolve();
@@ -130,7 +134,7 @@ const AuthProvider = ({ children }) => {
 
   // Auth State Observer
   useEffect(() => {
-    const isAdmin = localStorage.getItem("admin-logged-in") === "true";
+    const isAdmin = safeStorage.getItem("admin-logged-in") === "true";
     if (isAdmin) {
       setUser({ uid: "admin-uid", email: "admin@buildwithus", displayName: "Admin" });
       setIsAuthLoading(false);
@@ -138,7 +142,7 @@ const AuthProvider = ({ children }) => {
     }
 
     if (!auth) {
-      const token = localStorage.getItem("ub-jewellers-jwt-token");
+      const token = safeStorage.getItem("ub-jewellers-jwt-token");
       if (token) {
         setUser({ uid: "mock-uid", email: "demo@example.com", displayName: "Demo User" });
       } else {
@@ -149,7 +153,8 @@ const AuthProvider = ({ children }) => {
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (localStorage.getItem("admin-logged-in") === "true") {
+      if (safeStorage.getItem("admin-logged-in") === "true") {
+        setIsAuthLoading(false);
         return;
       }
 
@@ -161,14 +166,16 @@ const AuthProvider = ({ children }) => {
           })
           .then((res) => {
             if (res.data.token) {
-              localStorage.setItem("ub-jewellers-jwt-token", res.data.token);
-
-              localStorage.getItem("ub-jewellers-jwt-token") &&
-                setIsAuthLoading(false);
+              safeStorage.setItem("ub-jewellers-jwt-token", res.data.token);
             }
+          })
+          .catch(() => {})
+          .finally(() => {
+            // Always clear loading, even if JWT call fails
+            setIsAuthLoading(false);
           });
       } else {
-        localStorage.removeItem("ub-jewellers-jwt-token");
+        safeStorage.removeItem("ub-jewellers-jwt-token");
         setUser(null);
         setIsAuthLoading(false);
       }
