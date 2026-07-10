@@ -66,10 +66,20 @@ const AuthProvider = ({ children }) => {
         setTimeout(() => {
           const mockUser = { uid: "admin-uid", email: "admin@buildwithus", displayName: "Admin" };
           setUser(mockUser);
-          localStorage.setItem("ub-jewellers-jwt-token", "mock-token");
           localStorage.setItem("admin-logged-in", "true");
-          setIsAuthLoading(false);
-          resolve({ user: mockUser });
+          
+          // Fetch real JWT token from backend
+          axios
+            .post(`${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/jwt`, {
+              email: mockUser.email,
+            })
+            .then((res) => {
+              if (res.data.token) {
+                localStorage.setItem("ub-jewellers-jwt-token", res.data.token);
+              }
+              setIsAuthLoading(false);
+              resolve({ user: mockUser });
+            });
         }, 500);
       });
     }
