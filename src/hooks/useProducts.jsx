@@ -10,7 +10,7 @@ const useProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await axios.get(
-        "https://ub-jewellers-server.onrender.com/products"
+        `${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/products`
       );
       return res.data;
     },

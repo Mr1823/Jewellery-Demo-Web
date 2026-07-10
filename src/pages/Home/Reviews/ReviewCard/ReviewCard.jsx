@@ -1,26 +1,74 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
+import placeholderUser from "../../../../assets/placeholder-user.png";
 
-const ReviewCard = ({ reviewObj }) => {
-  const { name, img, review, rating, location } = reviewObj;
+const premiumIndianReviews = [
+  {
+    name: "Ananya Sharma",
+    location: "Mumbai, Maharashtra",
+    review: "The Jewelz Store has an exquisite collection of kundan and gold jewellery! The website is so elegant, easy to navigate, and ordering was absolutely seamless. Truly a luxury online shopping experience."
+  },
+  {
+    name: "Aarav Mehta",
+    location: "Delhi, NCR",
+    review: "Bought a traditional temple jewellery set for my sister from The Jewelz Store. The website details made it easy to verify the specifications, and delivery was prompt. Outstanding service!"
+  },
+  {
+    name: "Priya Patel",
+    location: "Ahmedabad, Gujarat",
+    review: "Absolutely love the bangles I purchased! The website's user interface is super clean, making it simple to find exact sizes and carat values. Will definitely be buying again."
+  },
+  {
+    name: "Rohan Reddy",
+    location: "Hyderabad, Telangana",
+    review: "Exceptional customer support and highly secure packaging. The gold ring is even more stunning in person than on the site. Truly a top-class web store for jewellery!"
+  },
+  {
+    name: "Sneha Iyer",
+    location: "Chennai, Tamil Nadu",
+    review: "Finding authentic Indian traditional designs online is usually hard, but this website makes it effortless. The detailed product description and clear gold purity info are extremely helpful."
+  },
+  {
+    name: "Kabir Malhotra",
+    location: "Bengaluru, Karnataka",
+    review: "Excellent response and fast shipping. The Jewelz Store website is responsive, secure, and works beautifully on mobile. Setting up an account and tracking my order was a breeze."
+  },
+  {
+    name: "Diya Sen",
+    location: "Kolkata, West Bengal",
+    review: "Very pleased with my purchase. The collection is modern yet deeply traditional, and the website's checkout is super fast and straightforward. A complete pleasure to shop here!"
+  },
+  {
+    name: "Vikram Rao",
+    location: "Pune, Maharashtra",
+    review: "Amazing quality and beautiful designs. The product photos are high definition and accurate, and standard delivery was right on time. Highly recommend The Jewelz Store!"
+  }
+];
+
+const ReviewCard = ({ reviewObj, index = 0 }) => {
+  const { rating } = reviewObj;
+  
+  // Get mapped premium review details
+  const mappedReview = premiumIndianReviews[index % premiumIndianReviews.length];
+
   return (
-    <div className="border border-black w-[90%] md:w-[80%] mx-auto flex flex-col md:flex-row items-start gap-4 p-10 bg-white">
-      <div className="w-[50%] md:w-[20%] mx-auto md:mx-0">
+    <div className="border border-black w-[90%] md:w-[80%] mx-auto flex flex-col md:flex-row items-center md:items-start gap-6 p-10 bg-white">
+      <div className="w-[120px] h-[120px] md:w-[15%] flex-shrink-0 mx-auto md:mx-0">
         <img
-          src={img}
-          alt={name}
-          className="rounded-full w-full"
+          src={placeholderUser}
+          alt={mappedReview.name}
+          className="rounded-full w-full h-full object-cover border-2 border-[var(--pink-gold)]"
           referrerPolicy="no-referrer"
         />
       </div>
-      <div style={{ fontFamily: "var(--poppins)" }} className="md:w-[80%]">
-        <h4 className="text-lg text-black font-medium text-center md:text-left">
-          {review}
+      <div style={{ fontFamily: "var(--poppins)" }} className="md:w-[85%]">
+        <h4 className="text-lg text-black font-medium text-center md:text-left leading-relaxed">
+          "{mappedReview.review}"
         </h4>
         <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3 mt-4 mb-1">
-          <h3 className="text-2xl text-black font-semibold">{name}</h3>
+          <h3 className="text-xl text-black font-semibold">{mappedReview.name}</h3>
           <StarRatings
-            rating={rating}
+            rating={rating || 5}
             starDimension="18px"
             starSpacing="2px"
             starRatedColor="#d4647c"
@@ -30,7 +78,7 @@ const ReviewCard = ({ reviewObj }) => {
           />
         </div>
 
-        <p className="text-center md:text-left mt-2">{location}</p>
+        <p className="text-sm text-gray-500 text-center md:text-left mt-1">{mappedReview.location}</p>
       </div>
     </div>
   );

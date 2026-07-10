@@ -34,7 +34,7 @@ const AdminAddProduct = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get("https://ub-jewellers-server.onrender.com/categories")
+        .get(`${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/categories`)
         .then((res) => setCategories(res.data))
         .catch((e) => console.error(e));
     }

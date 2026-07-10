@@ -169,7 +169,7 @@ const AdminManageUsers = () => {
                         : "-Not Added-"}
                     </td>
                     <td>
-                      $
+                      ₹
                       {totalSpentArray
                         ?.find((item) => item.email === user.email)
                         ?.totalSpent?.toFixed(2) || 0}

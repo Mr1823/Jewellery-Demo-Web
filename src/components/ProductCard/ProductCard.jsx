@@ -206,10 +206,10 @@ const ProductCard = ({ cardData, flashSale, counter }) => {
         <p className="text-gray-600 mt-1 mb-3">{category}</p>
         <div className="flex items-baseline justify-start gap-3">
           <h4 className="md:text-lg font-bold mb-2">
-            ${discountPrice || price}
+            ₹{discountPrice || price}
           </h4>
           {discountPrice && (
-            <h5 className="text-base text-gray-400 line-through">{price}</h5>
+            <h5 className="text-base text-gray-400 line-through">₹{price}</h5>
           )}
         </div>
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4">

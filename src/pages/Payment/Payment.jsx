@@ -5,7 +5,8 @@ import CheckoutForm from "./CheckoutForm/CheckoutForm";
 import useCart from "../../hooks/useCart";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
+const stripeKey = import.meta.env.VITE_PAYMENT_GATEWAY_PK;
+const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
 
 const Payment = () => {
   const [clientSecret, setClientSecret] = useState("");

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "/logo.png";
 import "./AdminNavigation.css";
 import {
   FaAngleRight,
@@ -38,13 +37,40 @@ const AdminNavigation = ({ sidebarCollapsed, setSidebarCollapsed }) => {
     <div>
       <header className="min-h-16 bg-white top-0 w-full fixed shadow z-[9999]">
         <div className="flex justify-between items-center h-16 gap-10 md:gap-0">
-          <div className="flex justify-between items-center gap-x-3 w-[50%] md:w-[19.8%] border">
-            <div className="flex-grow flex flex-col md:flex-row items-center justify-around bg-[var(--pink-gold)] px-2 py-7 h-16">
-              <Link to={"/"} className="block w-[90%] md:w-[65%]">
-                <img src={logo} alt="logo" className="w-full" />
+          <div
+            className={`flex justify-between items-center gap-x-3 transition-all duration-500 ease-in-out ${
+              !sidebarCollapsed ? "w-[50%] md:w-[260px]" : "w-[60px]"
+            } border-r`}
+          >
+            <div className="flex-grow flex flex-col md:flex-row items-center justify-around bg-[var(--pink-gold)] px-2 py-7 h-16 overflow-hidden">
+              <Link to={"/"} className="block">
+                {!sidebarCollapsed ? (
+                  <h1
+                    className="text-white text-lg font-bold whitespace-nowrap text-center"
+                    style={{ fontFamily: "var(--italiana)", letterSpacing: "0.05em" }}
+                  >
+                    The Jewelz Store
+                  </h1>
+                ) : (
+                  <span className="text-white text-2xl font-bold">💎</span>
+                )}
               </Link>
             </div>
           </div>
+
+          {/* Toggle Button in Navbar next to brand */}
+          <button
+            onClick={collapseSidebar}
+            className="hidden md:flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors ml-4 shrink-0"
+          >
+            <FaArrowLeft
+              className={`text-gray-600 transition-all duration-500 ease-in-out ${
+                sidebarCollapsed ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          <div className="flex-grow"></div>
 
           <details className="dropdown dropdown-end bg-white shadow-none h-16 m-0 w-[16%] md:w-[5%] border-none">
             <summary className="btn p-0 ml-auto flex gap-x-3 justify-center items-center w-full bg-white shadow-none rounded-none h-full hover:bg-base-200 border-none md:px-2">
@@ -94,8 +120,8 @@ const AdminNavigation = ({ sidebarCollapsed, setSidebarCollapsed }) => {
 
       <aside
         className={`${
-          !sidebarCollapsed ? "w-[92vw] md:w-[19.72%]" : "w-[55px]"
-        } h-[calc(100vh-64px)] whitespace-nowrap fixed shadow overflow-x-visible transition-all duration-500 ease-in-out top-16 bg-black z-[9999]`}
+          !sidebarCollapsed ? "w-[92vw] md:w-[260px]" : "w-[60px]"
+        } h-[calc(100vh-64px)] whitespace-nowrap fixed left-0 shadow overflow-x-visible transition-all duration-500 ease-in-out top-16 bg-black z-[9999]`}
       >
         <div className="sidebar-menu-con flex flex-col justify-between h-full">
           <ul className="flex flex-col gap-2 mt-2 overflow-x-hidden overflow-y-auto flex-grow">
@@ -216,16 +242,6 @@ const AdminNavigation = ({ sidebarCollapsed, setSidebarCollapsed }) => {
           </ul>
         </div>
 
-        <button
-          className="absolute top-1 -right-4 bg-slate-100 rounded-full p-2 opacity-70 hover:opacity-100"
-          onClick={collapseSidebar}
-        >
-          <FaArrowLeft
-            className={` block mx-auto transition-all duration-700 ease-in-out ${
-              sidebarCollapsed && "rotate-180"
-            }`}
-          />
-        </button>
       </aside>
     </div>
   );

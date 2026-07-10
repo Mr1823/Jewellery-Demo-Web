@@ -154,7 +154,7 @@ const RightSideDrawer = ({ setShowRightDrawer }) => {
                             <h5 className="font-bold">{product.name}</h5>
                           </Link>
                           <p className="mt-2 font-semibold">
-                            $ {product.price}
+                            ₹ {product.price}
                           </p>
 
                           {/* plus minus quantity or delete option */}
@@ -216,7 +216,7 @@ const RightSideDrawer = ({ setShowRightDrawer }) => {
           <div className="right-drawer-footer border-t-2 border-dashed py-3 px-2 mt-5 mb-1 space-y-8">
             <div className="text-gray-700 text-sm font-bold flex justify-between items-center">
               <p>Subtotal:</p>
-              <p>${parseFloat(subtotal).toFixed(2)}</p>
+              <p>₹{parseFloat(subtotal).toFixed(2)}</p>
             </div>
 
             <Link to="/checkout" className="block">

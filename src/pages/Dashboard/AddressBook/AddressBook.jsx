@@ -35,7 +35,7 @@ const AddressBook = () => {
   const [stateData, setStateData] = useState([]);
   const [cityData, setCityData] = useState([]);
 
-  const [countryCode, setCountryCode] = useState(countryData[0]?.isoCode);
+  const [countryCode, setCountryCode] = useState("IN");
   const [stateCode, setStateCode] = useState(
     stateData.length && stateData[0]?.isoCode
   );

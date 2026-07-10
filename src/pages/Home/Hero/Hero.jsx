@@ -46,33 +46,33 @@ const Hero = () => {
         <div className="hero-slide">
           <img src={isMobile && isPortrait ? img1small : img1} alt="Slide 1" />
           <div className="hero-text">
-            <h1 className="">Romance</h1>
+            <h1 className="">Kundan</h1>
             <button>SHOP NOW</button>
           </div>
         </div>
         <div className="hero-slide">
           <img src={isMobile && isPortrait ? img2small : img2} alt="Slide 2" />
           <div className="hero-text">
-            <h1 className="">Charms</h1>
+            <h1 className="">Bangles</h1>
             <button>SHOP NOW</button>
           </div>
         </div>
         <div className="hero-slide">
           <img src={isMobile && isPortrait ? img3small : img3} alt="Slide 3" />
           <div className="hero-text">
-            <h1 className="">Pearls</h1>
+            <h1 className="">Bridal</h1>
             <button>SHOP NOW</button>
           </div>
         </div>
         <div className="hero-slide">
           <img src={isMobile && isPortrait ? img4small : img4} alt="Slide 4" />
           <div className="hero-text">
-            <h1 className="">Richstones</h1>
+            <h1 className="">Temple</h1>
             <button>SHOP NOW</button>
           </div>
         </div>
         <div className="hero-slide">
-          <img src={isMobile && isPortrait ? img5small : img5} alt="Slide 4" />
+          <img src={isMobile && isPortrait ? img5small : img5} alt="Slide 5" />
           <div className="hero-text">
             <h1 className="">Diamonds</h1>
             <Link to={"/shop"}>

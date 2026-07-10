@@ -15,7 +15,7 @@ const DashboardLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 
   return (
-    <div style={{ fontFamily: "var(--poppins)" }} className="max-w-screen-2xl">
+    <div style={{ fontFamily: "var(--poppins)" }} className="w-full">
       <CustomHelmet title={"Dashboard"} />
 
       <>
@@ -31,8 +31,8 @@ const DashboardLayout = () => {
                   <div
                     className={`w-[100vw-100px] ml-[60px] ${
                       !sidebarCollapsed
-                        ? "md:w-[calc(100vw-330px)] md:ml-[300px]"
-                        : "md:ml-[75px] md:w-[calc(100vw-100px)]"
+                        ? "md:w-[calc(100vw-300px)] md:ml-[280px]"
+                        : "md:ml-[80px] md:w-[calc(100vw-100px)]"
                     } py-5 transition-all duration-500 ease-in-out md:px-6`}
                   >
                     <Outlet />

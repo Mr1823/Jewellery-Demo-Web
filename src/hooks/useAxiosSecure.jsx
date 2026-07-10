@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
 
   // Create an interceptor instance of Axios with a base URL
   const axiosSecure = axios.create({
-    baseURL: "https://ub-jewellers-server-production.up.railway.app",
+    baseURL: import.meta.env.VITE_SERVER_URL || "http://localhost:5000",
   });
 
   // Add an interceptor to inject the authorization header

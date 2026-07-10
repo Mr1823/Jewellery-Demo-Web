@@ -9,7 +9,7 @@ const useSearchedProducts = (searchText) => {
     setIsSearchLoading(true);
     axios
       .get(
-        `https://ub-jewellers-server.onrender.com/products?searchText=${searchText}`
+        `${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/products?searchText=${searchText}`
       )
       .then((res) => {
         setSearchedProducts(res.data);

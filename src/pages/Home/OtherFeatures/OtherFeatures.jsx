@@ -1,9 +1,35 @@
 import React from "react";
 import "./OtherFeatures.css";
 import { LiaShippingFastSolid } from "react-icons/lia";
-import { RiRefund2Line } from "react-icons/ri";
 import { MdOutlinePayment } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
+
+// Custom refund icon with Indian Rupee (₹) symbol inside a return arrow
+const RupeeRefundIcon = ({ className }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+    <text
+      x="12"
+      y="15.5"
+      textAnchor="middle"
+      fontSize="10"
+      fontWeight="700"
+      fill="currentColor"
+      stroke="none"
+      style={{ fontFamily: 'var(--poppins), sans-serif' }}
+    >
+      ₹
+    </text>
+  </svg>
+);
 
 const OtherFeatures = () => {
   return (
@@ -16,7 +42,7 @@ const OtherFeatures = () => {
         <div>
           <h4 className="text-xl font-bold mb-2 text-black">Free Shipping</h4>
           <p className="text-gray-900">
-            Free Shipping worldwide for orders over $1130
+            Free Shipping across India for orders over ₹5,000
           </p>
         </div>
       </div>
@@ -32,7 +58,7 @@ const OtherFeatures = () => {
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-6 md:border-r-2 border-black">
-        <RiRefund2Line className="text-6xl" />
+        <RupeeRefundIcon className="text-6xl" />
         <div>
           <h4 className="text-xl font-bold mb-2 text-black">Money Guarentee</h4>
           <p className="text-gray-900">

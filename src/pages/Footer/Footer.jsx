@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Footer.css";
-import logo from "/logo.png";
 import { IoHomeOutline, IoMailOutline, IoCallOutline } from "react-icons/io5";
 import {
   FaFacebookF,
@@ -17,7 +16,7 @@ const Footer = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     axios
-      .get("https://ub-jewellers-server.onrender.com/categories")
+      .get(`${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/categories`)
       .then((res) => setCategories(res.data))
       .catch((error) => console.error(error));
   }, []);
@@ -31,10 +30,15 @@ const Footer = () => {
     >
       <div className="footer flex flex-col md:flex-row items-start justify-between gap-4 py-10 space-y-10 md:space-y-0">
         <div className="md:w-[31%]">
-          <img src={logo} alt="logo" className="w-1/2 mb-4" />
+          <h2
+            className="text-2xl font-bold mb-4"
+            style={{ fontFamily: "var(--italiana)", letterSpacing: "0.05em" }}
+          >
+            The Jewelz Store
+          </h2>
           <p className="text-gray-600">
-            Find your perfect imperfection, handcrafted with love only from UB
-            Jewellery
+            Find your perfect imperfection, handcrafted with love only from The
+            Jewelz Store
           </p>
           <img
             src="https://ascella.qodeinteractive.com/wp-content/uploads/2023/03/footer-logo-clients-img-x2.png"
@@ -46,15 +50,15 @@ const Footer = () => {
           <h4>Contact Us</h4>
           <div className="mt-4 flex items-start gap-4 text-gray-600">
             <IoHomeOutline className="text-lg" />
-            <p>Narayanganj, Dhaka, Bangladesh</p>
+            <p>Colaba Causeway, Colaba, Mumbai, India</p>
           </div>
           <div className="mt-2 flex items-start gap-4 text-gray-600">
             <IoMailOutline className="text-lg" />
-            <p>uzzalbhowmik21@gmail.com</p>
+            <p>info@thejewelzstore.com</p>
           </div>
           <div className="mt-2 flex items-start gap-4 text-gray-600">
             <IoCallOutline className="text-lg" />
-            <p>+8801306-734299</p>
+            <p>+91 98765-43210</p>
           </div>
         </div>
 
@@ -92,7 +96,7 @@ const Footer = () => {
 
       <div>
         <p className="text-sm font-medium text-gray-500 text-center">
-          Copyright &copy; Uzzal Bhowmik 2024. All Rights Reserved.
+          Copyright &copy; The Jewelz Store 2026. All Rights Reserved.
         </p>
       </div>
     </div>

@@ -12,7 +12,7 @@ const Reviews = () => {
     queryKey: ["reviews"],
     queryFn: async () => {
       const res = await axios.get(
-        "https://ub-jewellers-server.onrender.com/reviews"
+        `${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/reviews`
       );
       return res.data;
     },
@@ -60,8 +60,8 @@ const Reviews = () => {
           </div>
         ) : (
           <Slider {...settings} ref={sliderRef}>
-            {reviews?.map((reviewObj) => (
-              <ReviewCard key={reviewObj._id} reviewObj={reviewObj} />
+            {reviews?.map((reviewObj, idx) => (
+              <ReviewCard key={reviewObj._id} reviewObj={reviewObj} index={idx} />
             ))}
           </Slider>
         )}

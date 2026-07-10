@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import logo from "/logo.png";
 import {
   FiPhone,
   FiSearch,
@@ -47,13 +46,13 @@ const Header = () => {
   // fetch or update upper nav notifications
   useEffect(() => {
     // un-comment to add new notification(reminder: notification array is in backend)
-    // axios.post("https://ub-jewellers-server.onrender.com/nav-notifications", {}).then((res) => {
+    // axios.post(`${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/nav-notifications`, {}).then((res) => {
     //   console.log(res.data);
     // });
 
     // fetching notifications
     axios
-      .get("https://ub-jewellers-server.onrender.com/nav-notifications")
+      .get(`${import.meta.env.VITE_SERVER_URL || "http://localhost:5000"}/nav-notifications`)
       .then((res) => setNavNotifications(res.data))
       .catch((error) => console.error(error));
   }, []);
@@ -180,8 +179,8 @@ const Header = () => {
             <div className="w-[75%] upper-nav-left">
               <div className="flex items-center gap-3 font-semibold">
                 <FiPhone className="text-lg" />
-                <a href="tel:+8801306734299" className="text-sm">
-                  (+880) 13067-34299
+                <a href="tel:+919876543210" className="text-sm">
+                  (+91) 98765-43210
                 </a>
               </div>
               <Textra
@@ -193,35 +192,35 @@ const Header = () => {
             </div>
             <div className="w-[25%] flex justify-end items-center gap-3 upper-nav-right">
               <a
-                href="https://www.facebook.com/uzzal.bhowmik01"
+                href="https://www.facebook.com"
                 target="_blank"
                 rel="noreferrer"
               >
                 <FaFacebookF className="text-xl" />
               </a>
               <a
-                href="https://youtu.be/xuuNZQwhEn4?si=iqIPgbobYcA7EhOD"
+                href="https://www.youtube.com"
                 target="_blank"
                 rel="noreferrer"
               >
                 <FaYoutube className="text-xl" />
               </a>
               <a
-                href="https://www.instagram.com/reel/C1UC-rjMkAE/"
+                href="https://www.instagram.com"
                 target="_blank"
                 rel="noreferrer"
               >
                 <FaInstagram className="text-xl" />
               </a>
               <a
-                href="https://www.linkedin.com/in/uzzal-bhowmik-76973319a/"
+                href="https://www.linkedin.com"
                 target="_blank"
                 rel="noreferrer"
               >
                 <FaLinkedin className="text-xl" />
               </a>
               <a
-                href="https://www.pinterest.com/pin/pick-your-fave-video--745134700851924406/"
+                href="https://www.pinterest.com"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -326,7 +325,7 @@ const Header = () => {
                                   <div className="flex-grow">
                                     <h4>{product.name}</h4>
                                     <p className="mt-1">
-                                      $ {product.discountPrice || product.price}
+                                      ₹ {product.discountPrice || product.price}
                                     </p>
                                   </div>
                                 </div>
@@ -383,11 +382,12 @@ const Header = () => {
                     </div>
                     <div className="w-[38%] md:w-[25%] md:px-2 text-center">
                       <Link to="/">
-                        <img
-                          src={logo}
-                          alt="logo"
-                          className="w-full md:w-[210px] cursor-pointer"
-                        />
+                        <h1
+                          className="text-xl md:text-2xl font-bold cursor-pointer tracking-wide"
+                          style={{ fontFamily: "var(--italiana)", letterSpacing: "0.05em" }}
+                        >
+                          The Jewelz Store
+                        </h1>
                       </Link>
                     </div>
                     <div className="w-[50%] hidden lg:block text-center">
@@ -576,11 +576,12 @@ const Header = () => {
                     </div>
                     <div className="w-[38%] md:w-[25%] md:px-2 text-center">
                       <Link to="/">
-                        <img
-                          src={logo}
-                          alt="logo"
-                          className="w-full md:w-[210px] cursor-pointer"
-                        />
+                        <h1
+                          className="text-xl md:text-2xl font-bold cursor-pointer tracking-wide"
+                          style={{ fontFamily: "var(--italiana)", letterSpacing: "0.05em" }}
+                        >
+                          The Jewelz Store
+                        </h1>
                       </Link>
                     </div>
                     <div className="w-[50%] hidden lg:block text-center">

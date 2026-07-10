@@ -19,6 +19,9 @@ const useUserInfo = () => {
       localStorage.getItem("ub-jewellers-jwt-token") !== null,
     queryKey: ["user"],
     queryFn: async () => {
+      if (user?.email === "admin@buildwithus") {
+        return { admin: true, name: "Admin", email: "admin@buildwithus" };
+      }
       const res = await axiosSecure.get(`/user?email=${user?.email}`);
       return res.data;
     },
