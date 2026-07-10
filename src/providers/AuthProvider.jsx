@@ -149,6 +149,10 @@ const AuthProvider = ({ children }) => {
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (localStorage.getItem("admin-logged-in") === "true") {
+        return;
+      }
+
       if (currentUser?.uid !== undefined) {
         setUser(currentUser);
         axios
