@@ -2,15 +2,17 @@ services:
   - type: web
     name: ub-jewellers-backend
     runtime: node
+    plan: free
     rootDir: server
     buildCommand: npm install
     startCommand: npm start
     envVars:
       - key: MONGODB_URI
-        sync: false # User will set this in Render dashboard
+        sync: false
       - key: JWT_SECRET
-        sync: false # User will set this in Render dashboard
+        sync: false
       - key: PORT
         value: 10000
       - key: STRIPE_SECRET_KEY
-        sync: false # User will set this in Render dashboard
+        sync: false
+
