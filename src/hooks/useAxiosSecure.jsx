@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "./useAuthContext";
@@ -8,56 +8,68 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
   const { logOut } = useAuthContext();
 
-  // Create an interceptor instance of Axios with a base URL
-  const axiosSecure = axios.create({
-    baseURL: import.meta.env.VITE_SERVER_URL || "http://localhost:5000",
-  });
-
-  // Add an interceptor to inject the authorization header
-  axiosSecure.interceptors.request.use(
-    (config) => {
-      // Get the access token from safeStorage (Safari private mode safe)
-      const accessToken = safeStorage.getItem("ub-jewellers-jwt-token");
-
-      // If an access token exists, add it to the request headers
-      if (accessToken) {
-        config.headers["Authorization"] = `Bearer ${accessToken}`;
-      }
-
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
+  // Create the axios instance ONCE (not on every render)
+  const axiosSecure = useMemo(
+    () =>
+      axios.create({
+        baseURL: import.meta.env.VITE_SERVER_URL || "http://localhost:5000",
+      }),
+    []
   );
 
-  // Add an interceptor to handle 401 and 403 responses
-  axiosSecure.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 403)
-      ) {
-        // Unauthorized or Forbidden status received, log the user out and redirect to the login page
-        logOut()
-          .then(() => {})
-          .catch((err) => console.error(err));
-        navigate("/login"); // Redirect to the login page
-      }
-      return Promise.reject(error);
-    }
-  );
+  // Store interceptor IDs so we can properly eject them
+  const interceptorIds = useRef({ request: null, response: null });
 
-  // Cleanup the interceptor on unmount
   useEffect(() => {
-    return () => {
-      axiosSecure.interceptors.request.eject(axiosSecure);
-      axiosSecure.interceptors.response.eject(axiosSecure);
+    // Add request interceptor — inject JWT token
+    interceptorIds.current.request = axiosSecure.interceptors.request.use(
+      (config) => {
+        var accessToken = safeStorage.getItem("ub-jewellers-jwt-token");
+        if (accessToken) {
+          config.headers["Authorization"] = "Bearer " + accessToken;
+        }
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+
+    // Add response interceptor — handle 401/403
+    interceptorIds.current.response = axiosSecure.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error) {
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 403)
+        ) {
+          logOut()
+            .then(function () {})
+            .catch(function (err) {
+              console.error(err);
+            });
+          navigate("/login");
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    // Cleanup: eject using the correct interceptor IDs
+    return function () {
+      if (interceptorIds.current.request !== null) {
+        axiosSecure.interceptors.request.eject(
+          interceptorIds.current.request
+        );
+      }
+      if (interceptorIds.current.response !== null) {
+        axiosSecure.interceptors.response.eject(
+          interceptorIds.current.response
+        );
+      }
     };
-  }, [axiosSecure]);
+  }, [axiosSecure, logOut, navigate]);
 
   return [axiosSecure];
 };

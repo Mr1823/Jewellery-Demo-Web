@@ -7,8 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     legacy({
-      targets: ['defaults', 'not IE 11'],
-      modernPolyfills: true
+      targets: ['defaults', 'not IE 11']
     })
   ],
   build: {

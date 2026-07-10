@@ -26,7 +26,14 @@ let analytics = null;
 if (isConfigured) {
   try {
     app = initializeApp(firebaseConfig);
-    analytics = getAnalytics(app);
+    // Only initialize analytics in browser environments where it's supported
+    if (typeof window !== "undefined") {
+      try {
+        analytics = getAnalytics(app);
+      } catch (analyticsError) {
+        console.warn("Analytics not available:", analyticsError.message);
+      }
+    }
   } catch (error) {
     console.error("Firebase initialization failed:", error);
   }
