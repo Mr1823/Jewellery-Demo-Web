@@ -5,6 +5,7 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 import useProducts from "../../../hooks/useProducts";
 import CardSkeleton from "../../../components/CardSkeleton/CardSkeleton";
 import { Link } from "react-router-dom";
+import { safeParseDateMs } from "../../../utils/storage";
 
 const NewProducts = () => {
   const [newProducts, setNewProducts] = useState([]);
@@ -17,8 +18,8 @@ const NewProducts = () => {
     );
 
     filteredNewProducts?.sort((a, b) => {
-      const dateA = new Date(a.addedAt || a.createdAt || 0);
-      const dateB = new Date(b.addedAt || b.createdAt || 0);
+      const dateA = new Date(safeParseDateMs(a.addedAt || a.createdAt || 0));
+      const dateB = new Date(safeParseDateMs(b.addedAt || b.createdAt || 0));
       return dateB.getTime() - dateA.getTime();
     });
 
