@@ -15,18 +15,46 @@
       media="(prefers-color-scheme: dark)"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      window.paceOptions = {
-        ajax: true,
-        restartOnPushState: false,
-        restartOnRequestAfter: false,
-      };
-    </script>
-    <script src="https://unpkg.com/pace-js@1.0.2/pace.min.js"></script>
     <title>The Jewelz Store</title>
+    <style>
+      /* Inline loading spinner so users see something immediately on slow connections */
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        z-index: 99999;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      #app-loader .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #c6a255;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      #app-loader p {
+        margin-top: 16px;
+        color: #666;
+        font-size: 14px;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
-  <div id="root"></div>
   <body>
+    <div id="root">
+      <!-- This loading spinner shows while the JS bundle downloads -->
+      <div id="app-loader">
+        <div class="spinner"></div>
+        <p>Loading The Jewelz Store...</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
