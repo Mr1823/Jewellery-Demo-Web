@@ -3,6 +3,7 @@ import useAuthContext from "./useAuthContext";
 import { useQuery } from "react-query";
 import toast from "react-hot-toast";
 import useAxiosSecure from "./useAxiosSecure";
+import safeStorage from "../utils/storage";
 
 const useWishlist = () => {
   const { user, isAuthLoading } = useAuthContext();
@@ -16,7 +17,7 @@ const useWishlist = () => {
     enabled:
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null,
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null,
     queryKey: ["wishlist"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/wishlist?email=${user?.email}`);

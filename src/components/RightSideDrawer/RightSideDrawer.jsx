@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./RightSideDrawer.css";
 import notAuthenticated from "../../assets/Forgot password.png";
 import useAuthContext from "../../hooks/useAuthContext";
+import safeStorage from "../../utils/storage";
 import { Link } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
@@ -68,7 +69,7 @@ const RightSideDrawer = ({ setShowRightDrawer }) => {
     if (
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null
     ) {
       axiosSecure.get(`/cart/subtotal?email=${user?.email}`).then((res) => {
         setSubTotal(res.data.subtotal);

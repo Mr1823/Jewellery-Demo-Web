@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { TfiTrash } from "react-icons/tfi";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { safeParseDateMs } from "../../../utils/storage";
 
 const MyOrders = () => {
   const { orders, totalSpent, refetch } = useOrders();
@@ -13,7 +14,7 @@ const MyOrders = () => {
   const handleDeleteOrder = (order) => {
     // date count: no order can be deleted after 7 days of ordering
     const today = new Date();
-    const orderDate = new Date(order.date);
+    const orderDate = new Date(safeParseDateMs(order.date));
 
     const diffInDays = Math.floor((today - orderDate) / (1000 * 60 * 60 * 24));
 

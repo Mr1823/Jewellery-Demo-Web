@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import useAuthContext from "./useAuthContext";
 import toast from "react-hot-toast";
 import useAxiosSecure from "./useAxiosSecure";
+import safeStorage from "../utils/storage";
 
 const useCart = () => {
   const { user, isAuthLoading } = useAuthContext();
@@ -16,7 +17,7 @@ const useCart = () => {
     enabled:
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null,
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null,
     queryKey: ["cart"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/cart?email=${user?.email}`);
@@ -29,7 +30,7 @@ const useCart = () => {
     enabled:
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null,
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null,
     queryKey: ["cart-subtotal"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/cart/subtotal?email=${user?.email}`);

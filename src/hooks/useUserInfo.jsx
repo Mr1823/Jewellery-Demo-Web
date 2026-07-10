@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAuthContext from "./useAuthContext";
 import { useQuery } from "react-query";
 import useAxiosSecure from "./useAxiosSecure";
+import safeStorage from "../utils/storage";
 
 const useUserInfo = () => {
   const { user, isAuthLoading } = useAuthContext();
@@ -16,7 +17,7 @@ const useUserInfo = () => {
     enabled:
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null,
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null,
     queryKey: ["user"],
     queryFn: async () => {
       if (user?.email === "admin@buildwithus") {
@@ -32,7 +33,7 @@ const useUserInfo = () => {
     if (
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null &&
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null &&
       userFromDB?.admin
     ) {
       axiosSecure.get("/admin/total-spent").then((res) => {

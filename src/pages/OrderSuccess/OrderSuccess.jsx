@@ -9,6 +9,7 @@ import emptyBox from "../../assets/emptybox.jpg";
 import toast from "react-hot-toast";
 import useUserInfo from "../../hooks/useUserInfo";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { safeParseDateMs } from "../../utils/storage";
 
 const OrderSuccess = () => {
   const location = useLocation();
@@ -47,7 +48,7 @@ const OrderSuccess = () => {
   }, [location?.state, orders, allOrders, userFromDB]);
 
   useEffect(() => {
-    const today = new Date(orderObj?.date);
+    const today = new Date(safeParseDateMs(orderObj?.date));
     const date = today.getDate();
     const month = today.toLocaleString("en-US", { month: "long" });
     const year = today.getFullYear();
@@ -88,7 +89,7 @@ const OrderSuccess = () => {
           orderObj?.total +
           orderDate?.year,
         // Invoice data
-        date: `${orderDate?.date}-${new Date(orderDate?.date).getMonth() + 1}-${
+        date: `${orderDate?.date}-${new Date(safeParseDateMs(orderObj?.date)).getMonth() + 1}-${
           orderDate?.year
         }`,
       },

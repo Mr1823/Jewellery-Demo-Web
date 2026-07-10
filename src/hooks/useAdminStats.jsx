@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import useAuthContext from "./useAuthContext";
 import useAxiosSecure from "./useAxiosSecure";
+import safeStorage from "../utils/storage";
 
 const defaultStats = {
   currentMonthStatsData: {
@@ -108,7 +109,7 @@ const useAdminStats = () => {
     enabled:
       !isAuthLoading &&
       user?.uid !== undefined &&
-      localStorage.getItem("ub-jewellers-jwt-token") !== null,
+      safeStorage.getItem("ub-jewellers-jwt-token") !== null,
     queryKey: ["admin-stats"],
     queryFn: async () => {
       try {
